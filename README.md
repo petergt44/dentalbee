@@ -73,8 +73,9 @@ dentalbee/
 
 ### Backend Setup
 
-1. Navigate to the project directory:
+1. Clone the repository:
 ```bash
+git clone https://github.com/petergt44/dentalbee.git
 cd dentalbee/note_app
 ```
 
@@ -89,20 +90,36 @@ source ../env/bin/activate  # On Windows: ..\env\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Configure database settings in `backend/settings.py` (if using PostgreSQL)
+4. Configure environment variables:
 
-5. Run migrations:
+Create a `.env` file in the `note_app` directory:
+```env
+SECRET_KEY=your-secret-key-here
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+DB_NAME=note_app
+DB_USER=dentalbee
+DB_PASSWORD=your-db-password
+DB_HOST=localhost
+DB_PORT=5432
+```
+
+For production, set `DEBUG=False` and use a strong `SECRET_KEY`.
+
+5. (Optional) Configure database settings in `backend/settings.py` if not using environment variables
+
+6. Run migrations:
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-6. Create superuser:
+7. Create superuser:
 ```bash
 python manage.py createsuperuser
 ```
 
-7. Run development server:
+8. Run development server:
 ```bash
 python manage.py runserver
 ```
@@ -176,13 +193,9 @@ npm test
 
 ## Environment Variables
 
-Create a `.env` file in the `note_app` directory:
+The application uses `python-decouple` to manage environment variables. See the setup instructions above for required variables.
 
-```env
-SECRET_KEY=your-secret-key-here
-DEBUG=True
-DATABASE_URL=postgresql://user:password@localhost:5432/dentalbee_db
-```
+**Important**: Never commit your `.env` file to version control. It's already included in `.gitignore`.
 
 ## Contributing
 
